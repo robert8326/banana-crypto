@@ -1,3 +1,5 @@
+from abc import ABC
+
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 
@@ -27,3 +29,15 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data.get('password'))
         user.save()
         return user
+
+
+class LoginTelegramUserSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+    telegram_id = serializers.IntegerField()
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'telegram_id', 'is_superuser')

@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    is_telegram_user = models.BooleanField(default=False, verbose_name='Is telegram user')
+    telegram_id = models.PositiveIntegerField(verbose_name='Telegram id', blank=True, null=True)
 
     class Meta:
         verbose_name = 'User'

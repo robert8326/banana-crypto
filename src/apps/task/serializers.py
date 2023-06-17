@@ -1,6 +1,8 @@
 from rest_framework.serializers import ModelSerializer
+from rest_framework.validators import ValidationError
 
 from apps.task.models import Task
+from apps.user.models import User
 
 
 class TaskSerializer(ModelSerializer):
@@ -11,7 +13,12 @@ class TaskSerializer(ModelSerializer):
             'user': {'read_only': True}
         }
 
-    def create(self, validated_data):
+    def validate(self, attrs):
         user = self.context['request'].user
-        validated_data['user'] = user
-        return super(TaskSerializer, self).create(validated_data)
+        if user.is_anonymous:
+            user = User.objects.filter(telegram_id=self.context['request'].data.get('telegram_id'))
+            if not user.exists():
+                raise ValidationError({'detail': "User with this telegram_id does not exist"})
+            user = user.first()
+        attrs['user'] = user
+        return attrs
