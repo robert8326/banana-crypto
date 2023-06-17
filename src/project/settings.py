@@ -40,8 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # my libs
+    'drf_yasg',
+    'rest_framework',
+    'rest_framework_simplejwt',
+
+    # my apps
     'apps.user.apps.UserConfig',
     'apps.task.apps.TaskConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -131,23 +138,23 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     )
-# }
-#
-# SIMPLE_JWT = {
-#     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=600),
-#     'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
-# }
-#
-# SWAGGER_SETTINGS = {
-#     'SECURITY_DEFINITIONS': {
-#         'Bearer': {
-#             'type': 'apiKey',
-#             'in': 'header',
-#             'name': 'Authorization'
-#         }
-#     },
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=600),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=60),
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization'
+        }
+    },
+}
